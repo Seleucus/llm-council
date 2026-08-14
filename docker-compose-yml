@@ -1,0 +1,19 @@
+services:
+backend:
+build:
+context: .
+dockerfile: Dockerfile.backend
+container_name: llm-council-backend
+env_file: - .env
+volumes: - /mnt/user/appdata/llm-council/data:/app/data
+ports: - "8001:8001"
+restart: unless-stopped
+
+frontend:
+build:
+context: .
+dockerfile: Dockerfile.frontend
+container_name: llm-council-frontend
+ports: - "5173:5173"
+depends_on: - backend
+restart: unless-stopped
