@@ -112,4 +112,21 @@ export const api = {
          }
       }
    },
+
+  async getSettings() {
+    const r = await fetch(`${API_BASE}/api/settings`);
+    if (!r.ok) throw new Error('Failed to get settings');
+    return r.json();
+  },
+
+  async updateSettings(councilModels, chairmanModel) {
+    const r = await fetch(`${API_BASE}/api/settings`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ council_models: councilModels, chairman_model: chairmanModel }),
+    });
+    if (!r.ok) throw new Error('Failed to update settings');
+    return r.json();
+  },
+
 };

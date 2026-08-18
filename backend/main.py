@@ -197,3 +197,24 @@ async def send_message_stream(conversation_id: str, request: SendMessageRequest)
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
+
+
+class SettingsUpdate(BaseModel):
+    council_models: list[str]
+    chairman_model: str
+
+
+@app.get("/api/settings")
+async def get_council_settings():
+    return get_settings()
+
+
+@app.put("/api/settings")
+async def update_council_settings(settings: SettingsUpdate):
+    if settings.chairman_model not in settings.council_models:
+        raise HTTPException(
+            status_code=400,
+            detail="chairman_model must be one of council_models"
+        )
+    update_settings(settings.council_models, settings.chairman_model)
+    return get_settings()

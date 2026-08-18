@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import './Sidebar.css';
 
 export default function Sidebar({
@@ -6,14 +5,20 @@ export default function Sidebar({
   currentConversationId,
   onSelectConversation,
   onNewConversation,
+  onOpenSettings,
 }) {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
         <h1>LLM Council</h1>
-        <button className="new-conversation-btn" onClick={onNewConversation}>
-          + New Conversation
-        </button>
+        <div className="sidebar-header-actions">
+          <button className="settings-btn" onClick={onOpenSettings} title="Council Settings">
+            ⚙️
+          </button>
+          <button className="new-conversation-btn" onClick={onNewConversation}>
+            + New
+          </button>
+        </div>
       </div>
 
       <div className="conversation-list">
@@ -23,17 +28,11 @@ export default function Sidebar({
           conversations.map((conv) => (
             <div
               key={conv.id}
-              className={`conversation-item ${
-                conv.id === currentConversationId ? 'active' : ''
-              }`}
+              className={`conversation-item ${conv.id === currentConversationId ? 'active' : ''}`}
               onClick={() => onSelectConversation(conv.id)}
             >
-              <div className="conversation-title">
-                {conv.title || 'New Conversation'}
-              </div>
-              <div className="conversation-meta">
-                {conv.message_count} messages
-              </div>
+              <div className="conversation-title">{conv.title || 'New Conversation'}</div>
+              <div className="conversation-meta">{conv.message_count} messages</div>
             </div>
           ))
         )}
