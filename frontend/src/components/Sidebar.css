@@ -81,3 +81,27 @@
 .sidebar-header-actions { display: flex; align-items: center; gap: 8px; }
 .settings-btn { background: none; border: none; cursor: pointer; font-size: 1rem; padding: 4px; opacity: 0.7; }
 .settings-btn:hover { opacity: 1; }
+
+/* Delete conversation button */
+.conversation-item-content {
+  flex: 1;
+  min-width: 0;
+}
+.delete-conv-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 4px 6px;
+  opacity: 0;
+  flex-shrink: 0;
+  border-radius: 4px;
+  transition: opacity 0.15s, background 0.15s;
+}
+.conversation-item:hover .delete-conv-btn {
+  opacity: 0.6;
+}
+.delete-conv-btn:hover {
+  opacity: 1 !important;
+  background: rgba(255, 80, 80, 0.15);
+}

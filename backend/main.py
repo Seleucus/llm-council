@@ -10,6 +10,7 @@ import json
 import asyncio
 
 from . import storage
+from .storage import delete_conversation
 from .settings_store import get_settings, update_settings
 from .council import run_full_council, generate_conversation_title, stage1_collect_responses, stage2_collect_rankings, stage3_synthesize_final, calculate_aggregate_rankings
 
@@ -219,3 +220,11 @@ async def update_council_settings(settings: SettingsUpdate):
         )
     update_settings(settings.council_models, settings.chairman_model)
     return get_settings()
+
+
+@app.delete("/api/conversations/{conversation_id}")
+async def delete_conversation_endpoint(conversation_id: str):
+    deleted = delete_conversation(conversation_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    return {"deleted": True}
